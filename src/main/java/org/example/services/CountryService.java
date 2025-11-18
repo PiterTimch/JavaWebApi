@@ -19,6 +19,7 @@ public class CountryService {
 
     private final ICountryRepository countryRepository;
     private final CountryMapper countryMapper;
+    private final FileService fileService;
 
     @Transactional
     public CountryItemDTO create(CountryCreateDTO dto) {
@@ -27,6 +28,11 @@ public class CountryService {
         }
 
         CountryEntity entity = countryMapper.fromCreateDTO(dto);
+
+        if (dto.getImage()!=null) {
+            String fileName = fileService.load(dto.getImage());
+            entity.setImage(fileName);
+        }
 
         CountryEntity saved = countryRepository.save(entity);
         return countryMapper.toDto(saved);

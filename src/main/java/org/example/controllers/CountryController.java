@@ -22,7 +22,7 @@ public class CountryController {
 
     @Operation(summary = "Створити нову країну")
     @PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<CountryItemDTO> create(@RequestBody CountryCreateDTO dto) {
+    public ResponseEntity<CountryItemDTO> create(@ModelAttribute CountryCreateDTO dto) {
         return ResponseEntity.ok(countryService.create(dto));
     }
 
