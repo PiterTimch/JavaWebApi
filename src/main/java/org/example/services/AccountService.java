@@ -1,0 +1,53 @@
+package org.example.services;
+
+import lombok.RequiredArgsConstructor;
+import org.example.data.dto.account.RegisterUserDTO;
+import org.example.entities.account.RoleEntity;
+import org.example.entities.account.UserEntity;
+import org.example.repository.IRoleRepository;
+import org.example.repository.IUserRepository;
+import org.springframework.security.crypto.password.PasswordEncoder;
+import org.springframework.stereotype.Service;
+
+import java.util.*;
+
+@Service
+@RequiredArgsConstructor
+public class AccountService {
+    private final IUserRepository userRepository;
+    private final PasswordEncoder passwordEncoder;
+    private final IRoleRepository roleRepository;
+    private final FileService fileService;
+
+    public boolean registerUser(RegisterUserDTO dto) {
+        if (userRepository.existsByUsername(dto.getUsername())) {
+            return false;
+        }
+
+        String fileName = fileService.load(dto.getImageFile());
+
+        UserEntity user = new UserEntity();
+        user.setUsername(dto.getUsername());
+        user.setPassword(passwordEncoder.encode(dto.getPassword()));
+        user.setImage(fileName);
+        user.setEmail(dto.getEmail());
+        user.setName(dto.getName());
+        user.setLastName(dto.getLastName());
+
+        Optional<RoleEntity> userRoleOpt = roleRepository.findByName("User");
+
+        if (userRoleOpt.isPresent()) {
+            Set<RoleEntity> roles = new HashSet<>();
+            roles.add(userRoleOpt.get());
+            user.setRoles(roles);
+        }
+
+        userRepository.save(user);
+
+        return true;
+    }
+
+    public List<UserEntity> GetAllUsers() {
+        return userRepository.findAll();
+    }
+}
