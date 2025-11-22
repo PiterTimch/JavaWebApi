@@ -2,6 +2,9 @@ package org.example.services;
 
 import lombok.RequiredArgsConstructor;
 import org.example.data.dto.account.RegisterUserDTO;
+import org.example.data.dto.account.UserItemDTO;
+import org.example.data.mappers.CountryMapper;
+import org.example.data.mappers.UserMapper;
 import org.example.entities.account.RoleEntity;
 import org.example.entities.account.UserEntity;
 import org.example.repository.IRoleRepository;
@@ -18,10 +21,11 @@ public class AccountService {
     private final PasswordEncoder passwordEncoder;
     private final IRoleRepository roleRepository;
     private final FileService fileService;
+    private final UserMapper userMapper;
 
-    public boolean registerUser(RegisterUserDTO dto) {
+    public UserItemDTO registerUser(RegisterUserDTO dto) {
         if (userRepository.existsByUsername(dto.getUsername())) {
-            return false;
+            return null;
         }
 
         String fileName = fileService.load(dto.getImageFile());
@@ -44,7 +48,7 @@ public class AccountService {
 
         userRepository.save(user);
 
-        return true;
+        return userMapper.toDto(user);
     }
 
     public List<UserEntity> GetAllUsers() {

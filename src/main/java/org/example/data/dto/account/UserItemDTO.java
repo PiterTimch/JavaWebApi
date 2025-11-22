@@ -8,6 +8,5 @@ public class UserItemDTO {
     private String lastName;
     private String name;
     private String email;
-    private String phone;
-    private String dateCreated;
+    private String image;
 }
