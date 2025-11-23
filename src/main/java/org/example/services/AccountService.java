@@ -24,14 +24,9 @@ public class AccountService {
     private final UserMapper userMapper;
 
     public UserItemDTO registerUser(RegisterUserDTO dto) {
-        if (userRepository.existsByUsername(dto.getUsername())) {
-            return null;
-        }
-
         String fileName = fileService.load(dto.getImageFile());
 
         UserEntity user = new UserEntity();
-        user.setUsername(dto.getUsername());
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setImage(fileName);
         user.setEmail(dto.getEmail());
