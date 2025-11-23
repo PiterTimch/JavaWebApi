@@ -19,7 +19,7 @@ public class AccountController {
 
     private final AccountService accountService;
 
-    @PostMapping(name = "/register", consumes = MULTIPART_FORM_DATA_VALUE)
+    @PostMapping(value = "/register", consumes = MULTIPART_FORM_DATA_VALUE)
     public ResponseEntity<UserItemDTO> register(@ValidatedDto @ModelAttribute RegisterUserDTO dto) {
         return ResponseEntity.ok(accountService.registerUser(dto));
     }
