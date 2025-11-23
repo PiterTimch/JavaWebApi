@@ -26,12 +26,10 @@ public class AccountService {
     public UserItemDTO registerUser(RegisterUserDTO dto) {
         String fileName = fileService.load(dto.getImageFile());
 
-        UserEntity user = new UserEntity();
+        UserEntity user = userMapper.fromRegisterDTO(dto);
+
         user.setPassword(passwordEncoder.encode(dto.getPassword()));
         user.setImage(fileName);
-        user.setEmail(dto.getEmail());
-        user.setName(dto.getName());
-        user.setLastName(dto.getLastName());
 
         Optional<RoleEntity> userRoleOpt = roleRepository.findByName("User");
 

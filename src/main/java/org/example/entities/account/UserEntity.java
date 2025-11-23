@@ -25,6 +25,9 @@ public class UserEntity {
     @Email(message = "Invalid email")
     private String email;
 
+    @Column(unique = true, nullable = false)
+    private String phone;
+
     @Column(nullable = true, length = 200)
     private String image;
 

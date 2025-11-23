@@ -35,6 +35,15 @@ public class RegisterUserValidator implements Validator<RegisterUserDTO> {
                     }
                     return null;
                 },
+                o -> !StringUtils.hasText(o.getPhone()) ? new FieldError("phone", "Телефон є обов'язковим") : null,
+                o -> o.getPhone() != null && !o.getPhone().matches("^\\+?[0-9]{10,15}$")
+                        ? new FieldError("phone", "Некоректний формат телефону") : null,
+                o -> {
+                    if (o.getPhone() != null && userRepository.findByPhone(o.getPhone()).isPresent()) {
+                        return new FieldError("phone", "Користувач з таким телефоном вже зареєстрований");
+                    }
+                    return null;
+                },
                 o -> !StringUtils.hasText(o.getPassword()) ? new FieldError("password", "Пароль є обов'язковим") : null,
                 o -> {
                     if (o.getPassword() == null) return null;
