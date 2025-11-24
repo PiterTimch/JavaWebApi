@@ -15,10 +15,10 @@ public class UserEntity {
     @GeneratedValue(strategy = GenerationType.IDENTITY)
     private Long id;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String lastName;
 
-    @Column(unique = true, nullable = false)
+    @Column(nullable = false)
     private String name;
 
     @Column(unique = true, nullable = false)
@@ -28,7 +28,7 @@ public class UserEntity {
     @Column(unique = true, nullable = false)
     private String phone;
 
-    @Column(nullable = true, length = 200)
+    @Column(nullable = true)
     private String image;
 
     @Column(nullable = false)
