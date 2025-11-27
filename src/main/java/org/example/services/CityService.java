@@ -9,6 +9,7 @@ import org.example.data.mappers.CityMapper;
 import org.example.entities.location.CityEntity;
 import org.example.entities.location.CountryEntity;
 import org.example.repository.ICityRepository;
+import org.example.repository.ICountryRepository;
 import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
@@ -23,6 +24,7 @@ public class CityService {
     private final ICityRepository cityRepository;
     private final CityMapper cityMapper;
     private final FileService fileService;
+    private final ICountryRepository countryRepository;
 
     @Transactional
     public CityItemDTO create(CityCreateDTO dto) {
@@ -30,9 +32,14 @@ public class CityService {
             throw new IllegalArgumentException("Категорія зі slug '" + dto.getSlug() + "' вже існує");
         }
 
+        CountryEntity country = countryRepository.findById(dto.getCountryId())
+                .orElseThrow(() -> new IllegalArgumentException("Країна з ID " + dto.getCountryId() + " не знайдена.")); // Або киньте інший виняток
+
         CityEntity entity = cityMapper.fromCreateDTO(dto);
 
-        if (dto.getImage()!=null) {
+        entity.setCountry(country);
+
+        if (dto.getImage() != null) {
             String fileName = fileService.load(dto.getImage());
             entity.setImage(fileName);
         }

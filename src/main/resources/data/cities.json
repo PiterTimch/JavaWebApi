@@ -1,0 +1,24 @@
+[
+  {
+    "name": "Київ",
+    "countryId": 1,
+    "population": 2884000,
+    "timezone": "UTC+2",
+    "mainAirportCode": "KBP",
+    "avgMealPrice": 8.5,
+    "avgHotelPrice": 55,
+    "hasRecreationalWater": true,
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/2/2f/Kyiv_skyline.jpg"
+  },
+  {
+    "name": "Львів",
+    "countryId": 1,
+    "population": 717000,
+    "timezone": "UTC+2",
+    "mainAirportCode": "LWO",
+    "avgMealPrice": 7,
+    "avgHotelPrice": 45,
+    "hasRecreationalWater": false,
+    "imageUrl": "https://upload.wikimedia.org/wikipedia/commons/9/95/Lviv_Ratusha.jpg"
+  }
+]
