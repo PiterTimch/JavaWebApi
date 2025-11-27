@@ -1,6 +1,9 @@
 package org.example.services;
 
 import lombok.RequiredArgsConstructor;
+import org.example.config.JwtService;
+import org.example.data.dto.account.AuthResponseDTO;
+import org.example.data.dto.account.LoginDTO;
 import org.example.data.dto.account.RegisterUserDTO;
 import org.example.data.dto.account.UserItemDTO;
 import org.example.data.mappers.CountryMapper;
@@ -9,6 +12,7 @@ import org.example.entities.account.RoleEntity;
 import org.example.entities.account.UserEntity;
 import org.example.repository.IRoleRepository;
 import org.example.repository.IUserRepository;
+import org.springframework.security.core.userdetails.UsernameNotFoundException;
 import org.springframework.security.crypto.password.PasswordEncoder;
 import org.springframework.stereotype.Service;
 
@@ -22,6 +26,7 @@ public class AccountService {
     private final IRoleRepository roleRepository;
     private final FileService fileService;
     private final UserMapper userMapper;
+    private final JwtService jwtService;
 
     public UserItemDTO registerUser(RegisterUserDTO dto) {
         UserEntity user = userMapper.fromRegisterDTO(dto);
@@ -45,6 +50,19 @@ public class AccountService {
         userRepository.save(user);
 
         return userMapper.toDto(user);
+    }
+
+    public AuthResponseDTO login(LoginDTO request) {
+        var user = userRepository.findByEmail(request.getEmail())
+                .orElseThrow();
+        var isValid = passwordEncoder.matches(request.getPassword(), user.getPassword());
+        if(!isValid) {
+            throw new UsernameNotFoundException("User not found");
+        }
+        var jwtToekn = jwtService.generateAccessToken(user);
+        return AuthResponseDTO.builder()
+                .token(jwtToekn)
+                .build();
     }
 
     public List<UserEntity> GetAllUsers() {
