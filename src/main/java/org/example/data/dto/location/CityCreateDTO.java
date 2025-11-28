@@ -25,6 +25,8 @@ public class CityCreateDTO {
 
     private String timezone;
 
+    private String description;
+
     private String mainAirportCode;
 
     private Double avgMealPrice;

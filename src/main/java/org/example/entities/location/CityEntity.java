@@ -25,6 +25,9 @@ public class CityEntity extends BaseEntity<Long> {
     private int population;
 
     @Column
+    private String description;
+
+    @Column
     private String timezone;
 
     @Column
