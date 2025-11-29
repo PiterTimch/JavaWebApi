@@ -21,7 +21,7 @@ public class CityCreateDTO {
     @NotNull(message = "Країна обов'язкова")
     private Long countryId;
 
-    private Integer population;
+    private int population;
 
     private String timezone;
 
@@ -29,9 +29,9 @@ public class CityCreateDTO {
 
     private String mainAirportCode;
 
-    private Double avgMealPrice;
+    private double avgMealPrice;
 
-    private Double avgHotelPrice;
+    private double avgHotelPrice;
 
-    private Boolean hasRecreationalWater;
+    private boolean hasRecreationalWater;
 }

@@ -19,7 +19,7 @@ public class CityItemDTO {
 
     private String countryName;
 
-    private Integer population;
+    private int population;
 
     private String timezone;
 
@@ -27,11 +27,11 @@ public class CityItemDTO {
 
     private String mainAirportCode;
 
-    private Double avgMealPrice;
+    private double avgMealPrice;
 
-    private Double avgHotelPrice;
+    private double avgHotelPrice;
 
-    private Boolean hasRecreationalWater;
+    private boolean hasRecreationalWater;
 
     private String dateCreated;
 }

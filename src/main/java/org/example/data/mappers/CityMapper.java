@@ -11,8 +11,10 @@ import org.mapstruct.Mapping;
 
 @Mapper(componentModel = "spring")
 public interface CityMapper {
+    @Mapping(source = "country.id", target = "countryId")
+    @Mapping(source = "country.name", target = "countryName")
     @Mapping(source = "createdAt", target = "dateCreated", dateFormat = "yyyy-MM-dd HH:mm:ss")
-    CityItemDTO toDto(CityEntity category);
+    CityItemDTO toDto(CityEntity entity);
     @Mapping(target = "image", ignore = true)
     CityEntity fromCreateDTO(CityCreateDTO dto);
 }

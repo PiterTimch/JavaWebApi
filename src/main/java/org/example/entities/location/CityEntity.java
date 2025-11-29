@@ -40,5 +40,5 @@ public class CityEntity extends BaseEntity<Long> {
     private double avgHotelPrice;
 
     @Column
-    private Boolean hasRecreationalWater;
+    private boolean hasRecreationalWater;
 }
