@@ -12,6 +12,9 @@ import org.example.validators.helpers.ValidatedDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
+import java.util.HashMap;
+import java.util.Map;
+
 import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 
 @RestController
@@ -23,7 +26,12 @@ public class FileController {
     private final FileService fileService;
 
     @PostMapping(value = "/saveImage", consumes = MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<String> saveImage(@ModelAttribute SaveImageFileDTO dto) {
-        return ResponseEntity.ok(fileService.load(dto.getImageFile()));
+    public ResponseEntity<Map<String, String>> saveImage(@ModelAttribute SaveImageFileDTO dto) {
+        String res = fileService.load(dto.getImageFile());
+
+        Map<String, String> response = new HashMap<>();
+        response.put("url", res);
+
+        return ResponseEntity.ok(response);
     }
 }
