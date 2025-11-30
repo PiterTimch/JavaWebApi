@@ -107,7 +107,7 @@ public class AppDbSeeder {
                     dto.setImage(null);
                 }
 
-                var saved = cityService.create(dto, null);
+                var saved = cityService.create(dto);
 
                 if (c.getImageUrl() != null && !c.getImageUrl().isEmpty()) {
                     String fileName = fileService.load(c.getImageUrl());

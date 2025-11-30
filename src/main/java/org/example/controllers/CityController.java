@@ -26,8 +26,8 @@ public class CityController {
 
     @Operation(summary = "Створити нове місто")
     @PostMapping(consumes = MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<CityItemDTO> create(@ModelAttribute CityCreateDTO dto, HttpServletRequest request) {
-        CityItemDTO res = cityService.create(dto, request);
+    public ResponseEntity<CityItemDTO> create(@ModelAttribute CityCreateDTO dto) {
+        CityItemDTO res = cityService.create(dto);
 
         return ResponseEntity.ok(res);
     }
