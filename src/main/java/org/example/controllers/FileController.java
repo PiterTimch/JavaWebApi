@@ -6,8 +6,10 @@ import org.example.data.dto.account.LoginDTO;
 import org.example.data.dto.account.RegisterUserDTO;
 import org.example.data.dto.account.UserItemDTO;
 import org.example.data.dto.file.SaveImageFileDTO;
+import org.example.data.dto.file.SavedImageDTO;
 import org.example.services.AccountService;
 import org.example.services.FileService;
+import org.example.services.ImageDbService;
 import org.example.validators.helpers.ValidatedDto;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
@@ -24,13 +26,13 @@ import static org.springframework.http.MediaType.MULTIPART_FORM_DATA_VALUE;
 public class FileController {
 
     private final FileService fileService;
+    private final ImageDbService imageDbService;
 
     @PostMapping(value = "/saveImage", consumes = MULTIPART_FORM_DATA_VALUE)
-    public ResponseEntity<Map<String, String>> saveImage(@ModelAttribute SaveImageFileDTO dto) {
+    public ResponseEntity<SavedImageDTO> saveImage(@ModelAttribute SaveImageFileDTO dto) {
         String res = fileService.load(dto.getImageFile());
 
-        Map<String, String> response = new HashMap<>();
-        response.put("url", res);
+        SavedImageDTO response = imageDbService.save(res);
 
         return ResponseEntity.ok(response);
     }
