@@ -52,8 +52,8 @@ public class CityService {
         }
         CityEntity saved = cityRepository.save(entity);
 
-        if (dto.getImageIds() != null && !dto.getImageIds().isEmpty()) {
-            List<ImageEntity> images = imageRepository.findAllById(dto.getImageIds());
+        if (dto.getDescriptionImageIds() != null && !dto.getDescriptionImageIds().isEmpty()) {
+            List<ImageEntity> images = imageRepository.findAllById(dto.getDescriptionImageIds());
             for (ImageEntity img : images) {
                 img.setCity(saved);
             }

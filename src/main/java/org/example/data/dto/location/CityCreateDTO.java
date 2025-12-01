@@ -31,7 +31,6 @@ public class CityCreateDTO {
     private double avgHotelPrice;
     private boolean hasRecreationalWater;
 
-    // Список ID фото, які вже завантажені і треба підв’язати до міста
-    private List<Long> imageIds;
+    private List<Long> descriptionImageIds;
 }
 
