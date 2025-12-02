@@ -70,23 +70,11 @@ public class CityService {
                 .collect(Collectors.toList());
     }
 
-//    public String processDescriptionImages(String html, HttpServletRequest request) {
-//        Document doc = Jsoup.parseBodyFragment(html);
-//        Elements images = doc.select("img");
-//
-//        String baseUrl = request.getScheme() + "://" + request.getServerName();
-//        if (request.getServerPort() != 80 && request.getServerPort() != 443) {
-//            baseUrl += ":" + request.getServerPort();
-//        }
-//
-//        for (Element img : images) {
-//            String src = img.attr("src");
-//            if (src != null && !src.isBlank() && src.startsWith("http")) {
-//                String serverFileName = fileService.load(src);
-//                img.attr("src", baseUrl + "/uploads/large/" + serverFileName);
-//            }
-//        }
-//
-//        return doc.body().html();
-//    }
+    @Transactional(readOnly = true)
+    public CityItemDTO getBySlug(String slug) {
+        CityEntity city = cityRepository.findBySlug(slug)
+                .orElseThrow(() -> new IllegalArgumentException("Місто зі slug '" + slug + "' не знайдено"));
+        return cityMapper.toDto(city);
+    }
+
 }

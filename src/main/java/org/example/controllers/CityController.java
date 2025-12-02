@@ -37,4 +37,12 @@ public class CityController {
     public ResponseEntity<List<CityItemDTO>> getAll() {
         return ResponseEntity.ok(cityService.getAll());
     }
+
+    @Operation(summary = "Отримати місто за слагом")
+    @GetMapping("/{slug}")
+    public CityItemDTO getCityBySlug(@PathVariable("slug") String slug) {
+        return cityService.getBySlug(slug);
+    }
+
+
 }
