@@ -8,10 +8,12 @@ import com.ibm.icu.text.Transliterator;
 import jakarta.annotation.PostConstruct;
 import lombok.RequiredArgsConstructor;
 import org.example.data.dto.location.CityCreateDTO;
+import org.example.data.dto.location.CountryCreateDTO;
 import org.example.data.dto.product.CategoryCreateDTO;
 import org.example.data.seed.CitySeedModel;
 import org.example.services.CategoryService;
 import org.example.services.CityService;
+import org.example.services.CountryService;
 import org.example.services.FileService;
 import org.springframework.core.io.ClassPathResource;
 import org.springframework.stereotype.Component;
@@ -28,6 +30,7 @@ public class AppDbSeeder {
     private final CategoryService categoryService;
     private final CityService cityService;
     private final FileService fileService;
+    private final CountryService countryService;
 
     private final Faker faker = new Faker(new Locale("uk"));
     private final Random random = new Random();
@@ -40,6 +43,7 @@ public class AppDbSeeder {
     @PostConstruct
     public void seedData() {
         seedCategories();
+        seedCountries();
         seedCitiesFromJson();
     }
 
@@ -70,12 +74,46 @@ public class AppDbSeeder {
         }
     }
 
-    private void seedCitiesFromJson() {
-        try {
-            if (!cityService.getAll().isEmpty()) {
-                return;
-            }
+    private void seedCountries() {
+        int targetCount = 10;
 
+        if (!countryService.getAll().isEmpty()) {
+            return;
+        }
+
+        Transliterator transliterator = Transliterator.getInstance("Cyrillic-Latin");
+
+        for (int i = 0; i < targetCount; i++) {
+
+            String name = faker.country().name();
+            String latin = transliterator.transliterate(name);
+            String slug = slugify.slugify(latin);
+            String code = faker.country().countryCode2();
+
+            try {
+                CountryCreateDTO dto = new CountryCreateDTO();
+                dto.setName(name);
+                dto.setSlug(slug);
+                dto.setCode(code);
+                dto.setImage(null);
+
+                countryService.create(dto);
+
+                System.out.println("Додано країну: " + name + " (" + slug + ")");
+            }
+            catch (IllegalArgumentException e) {
+                i--;
+            }
+        }
+    }
+
+
+    private void seedCitiesFromJson() {
+        if (!cityService.getAll().isEmpty()) {
+            return;
+        }
+
+        try {
             ObjectMapper mapper = new ObjectMapper();
             InputStream inputStream = new ClassPathResource("data/cities.json").getInputStream();
 

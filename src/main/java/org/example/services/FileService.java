@@ -31,7 +31,7 @@ public class FileService {
 
     public String load(MultipartFile file) {
         // Перевіряємо, чи файл не порожній
-        if (file.isEmpty()) return "";
+        if (file.isEmpty()) return "/images/no-image.webp";
 
         try (var inputStream = file.getInputStream()) {
             var fileName = saveStreamToFile(inputStream);
@@ -39,7 +39,7 @@ public class FileService {
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return "";
+            return "/images/no-image.webp";
         }
     }
 
@@ -54,7 +54,7 @@ public class FileService {
 
         } catch (Exception e) {
             System.out.println(e.getMessage());
-            return "";
+            return "/images/no-image.webp";
         }
     }
 

@@ -24,7 +24,7 @@ public class CityEntity extends BaseEntity<Long> {
     @Column
     private int population;
 
-    @Column(length = 10000)
+    @Column(length = 50000)
     private String description;
 
     @Column

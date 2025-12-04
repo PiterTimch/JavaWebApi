@@ -1,16 +1,10 @@
 package org.example.services;
 
-import io.micrometer.common.lang.Nullable;
-import jakarta.servlet.http.HttpServletRequest;
 import lombok.RequiredArgsConstructor;
 import org.example.data.dto.location.CityCreateDTO;
 import org.example.data.dto.location.CityItemDTO;
 import org.example.entities.common.ImageEntity;
 import org.example.repository.IImageRepository;
-import org.jsoup.Jsoup;
-import org.jsoup.nodes.Document;
-import org.jsoup.nodes.Element;
-import org.jsoup.select.Elements;
 import org.example.data.mappers.CityMapper;
 import org.example.entities.location.CityEntity;
 import org.example.entities.location.CountryEntity;
@@ -20,11 +14,11 @@ import org.springframework.stereotype.Service;
 import org.springframework.transaction.annotation.Transactional;
 
 import java.util.List;
-import java.util.Optional;
 import java.util.stream.Collectors;
 
 @Service
 @RequiredArgsConstructor
+@Transactional
 public class CityService {
 
     private final ICityRepository cityRepository;
@@ -63,6 +57,7 @@ public class CityService {
         return cityMapper.toDto(saved);
     }
 
+    @Transactional
     public List<CityItemDTO> getAll() {
         return cityRepository.findAll()
                 .stream()
