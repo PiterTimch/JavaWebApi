@@ -30,7 +30,6 @@ public class FileService {
     );
 
     public String load(MultipartFile file) {
-        // Перевіряємо, чи файл не порожній
         if (file.isEmpty()) return "/images/no-image.webp";
 
         try (var inputStream = file.getInputStream()) {
@@ -44,7 +43,6 @@ public class FileService {
     }
 
     public String load(String imageUrl) {
-        // Перевіряємо, чи посилання коректне
         if (!imageUrl.startsWith("http://") && !imageUrl.startsWith("https://"))
             return "";
 
